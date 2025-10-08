@@ -12,7 +12,7 @@ nltk.download('stopwords', quiet=True)
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="GuardianAI Pro",
+    page_title="The Detector",
     page_icon="✨",
     layout="wide",
     initial_sidebar_state="collapsed"
