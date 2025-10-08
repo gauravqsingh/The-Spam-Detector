@@ -3,24 +3,18 @@ import pickle
 import string
 import nltk
 from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer  # Using SnowballStemmer for better performance
-
-# --- NLTK Data Download (runs only if needed) ---
-# Using a quiet download to keep the console clean on deployment.
-nltk.download('punkt', quiet=True)
-nltk.download('stopwords', quiet=True)
+from nltk.stem.snowball import SnowballStemmer
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="The Detector",
+    page_title="GuardianAI Pro",
     page_icon="✨",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 # --- STYLING ---
-# This is a major part of the new look. It includes an animated gradient background,
-# glassmorphism card effect, and custom styles for all widgets.
+# This CSS creates the animated gradient background, glassmorphism card, and custom widget styles.
 st.markdown("""
 <style>
     @keyframes gradient {
@@ -28,21 +22,15 @@ st.markdown("""
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
-
-    /* Main App Background */
     .stApp {
         background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
         background-size: 400% 400%;
         animation: gradient 15s ease infinite;
         color: #FFFFFF;
     }
-
-    /* Hide Streamlit's default elements */
     header, footer { visibility: hidden; }
-
-    /* Glassmorphism Container for the main content */
     .main-container {
-        background: rgba(0, 0, 0, 0.2); /* Semi-transparent black */
+        background: rgba(0, 0, 0, 0.2);
         border-radius: 20px;
         padding: 2rem;
         border: 1px solid rgba(255, 255, 255, 0.18);
@@ -50,8 +38,6 @@ st.markdown("""
         -webkit-backdrop-filter: blur(10px);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
-
-    /* Custom Title */
     .title {
         font-family: 'Arial Black', sans-serif;
         text-align: center;
@@ -59,19 +45,13 @@ st.markdown("""
         color: #FFFFFF;
         text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
     }
-
-    /* Custom Selectbox (Dropdown Menu) */
     div[data-baseweb="select"] > div {
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         color: #FFFFFF;
     }
-    div[data-baseweb="select"] > div > div {
-        color: #FFFFFF;
-    }
-
-    /* Text Area */
+    div[data-baseweb="select"] > div > div { color: #FFFFFF; }
     .stTextArea textarea {
         background-color: rgba(0, 0, 0, 0.3);
         color: #FFFFFF;
@@ -79,11 +59,9 @@ st.markdown("""
         border: 1px solid rgba(255, 255, 255, 0.3);
         font-size: 16px;
     }
-
-    /* Main Analyze Button */
     .stButton>button {
         background-color: #FFFFFF;
-        color: #23a6d5; /* Blue to match gradient */
+        color: #23a6d5;
         border: none;
         padding: 15px 30px;
         font-size: 1.2em;
@@ -96,17 +74,13 @@ st.markdown("""
         transform: scale(1.05);
         background-color: #e0e0e0;
     }
-
-    /* Result Headers */
     .result-header {
         font-size: 2.2em; font-weight: bold; text-align: center;
         padding: 20px; border-radius: 10px; margin-top: 20px;
         color: white;
     }
-    .negative-result { background-color: rgba(255, 75, 75, 0.7); } /* Translucent Red */
-    .positive-result { background-color: rgba(40, 167, 69, 0.7); } /* Translucent Green */
-
-    /* Footer */
+    .negative-result { background-color: rgba(255, 75, 75, 0.7); }
+    .positive-result { background-color: rgba(40, 167, 69, 0.7); }
     .footer {
         text-align: center;
         padding-top: 2rem;
@@ -115,11 +89,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
 # --- TEXT PREPROCESSING FUNCTION ---
-# Using the more robust SnowballStemmer
 stemmer = SnowballStemmer('english')
-
-
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
@@ -132,7 +104,7 @@ def transform_text(text):
 
 
 # --- DICTIONARY TO HOLD MODEL INFO ---
-# This makes the code cleaner and easier to manage
+# UPDATED: Removed Phishing and Clickbait detectors
 MODELS = {
     "Spam Classifier": {
         "icon": "📧",
@@ -163,29 +135,22 @@ MODELS = {
     }
 }
 
-# --- MAIN APP LAYOUT ---
-st.markdown("<h1 class='title'>The Detector ✨</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #FFFFFF;'>Check before going foreward.</h3>",
-            unsafe_allow_html=True)
 
-# --- NAVIGATION DROPDOWN ---
-# Creates a list of options with icons for the selectbox
+# --- MAIN APP LAYOUT ---
+st.markdown("<h1 class='title'>GuardianAI Pro ✨</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #FFFFFF;'>Your intelligent shield against digital deception.</h3>", unsafe_allow_html=True)
+
 options = [f"{info['icon']} {name}" for name, info in MODELS.items()]
 selection_str = st.selectbox(
     "Choose a tool from the dropdown menu:",
     options
 )
-# Extract the clean name from the selection
 app_mode = selection_str.split(" ", 1)[1]
 
-# --- Glassmorphism Container ---
 with st.container():
     st.markdown("<div class='main-container'>", unsafe_allow_html=True)
 
-    # Get the details for the selected model
     selected_model = MODELS[app_mode]
-
-    # --- RENDER THE SELECTED PAGE ---
     st.header(f"{selected_model['icon']} {app_mode}")
     st.write(selected_model['description'])
 
@@ -206,16 +171,14 @@ with st.container():
                 result = model.predict(vectorized)[0]
 
                 if result == 1:
-                    st.markdown(f"<div class='result-header negative-result'>{selected_model['result_negative']}</div>",
-                                unsafe_allow_html=True)
+                    st.markdown(f"<div class='result-header negative-result'>{selected_model['result_negative']}</div>", unsafe_allow_html=True)
                 else:
-                    st.markdown(f"<div class='result-header positive-result'>{selected_model['result_positive']}</div>",
-                                unsafe_allow_html=True)
+                    st.markdown(f"<div class='result-header positive-result'>{selected_model['result_positive']}</div>", unsafe_allow_html=True)
         else:
             st.warning("Please enter some text to analyze.")
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# --- FOOTER ---
-st.markdown("<div class='footer'>Developed by Gaurav and Radhika </div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>Developed with ❤️ for GuardianAI</div>", unsafe_allow_html=True)
+
 
