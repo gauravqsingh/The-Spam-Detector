@@ -104,7 +104,6 @@ def transform_text(text):
 
 
 # --- DICTIONARY TO HOLD MODEL INFO ---
-# UPDATED: Removed Phishing and Clickbait detectors
 MODELS = {
     "Spam Classifier": {
         "icon": "📧",
@@ -180,5 +179,4 @@ with st.container():
     st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("<div class='footer'>Developed with ❤️ for GuardianAI</div>", unsafe_allow_html=True)
-
 
