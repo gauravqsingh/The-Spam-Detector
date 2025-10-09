@@ -12,7 +12,7 @@ Lakshya Nigam
 
 Dhruv Raj Kaushik
 
-📸 Application Showcase
+Application Showcase
 
 Here is a preview of The Filter's interface, featuring its modern design and easy-to-use dropdown navigation.
 
@@ -20,7 +20,7 @@ Here is a preview of The Filter's interface, featuring its modern design and eas
 
 (Suggestion: Add your own screenshot here!)
 
-🎯 Project Vision
+Project Vision
 The vision behind The Filter is to empower everyday internet users with a simple, accessible, and intelligent tool to navigate the digital world safely. By hiding the complexity of machine learning behind a beautiful interface, the app aims to foster digital literacy and build resilience against the growing threat of online deception.
 
 ✨ Key Features
