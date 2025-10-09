@@ -1,4 +1,4 @@
-# The-Spam-Detector
+# The-Filter
 The Filter: An Intelligent Shield Against Digital Deception ✨
 The Filter is a powerful, multi-feature web application built with Python and Streamlit that leverages Natural Language Processing (NLP) and Machine Learning to detect various forms of misleading and harmful online content. This all-in-one platform serves as a practical tool for users to analyze text in real-time, providing an instant second opinion on its safety and authenticity.
 
